@@ -1,5 +1,11 @@
 # 닷넷 개발자를 위한 DevContainer 설정 핸즈온 #
 
+이 핸즈온랩 세션은 [GitHub Codespaces](https://github.com/features/codespaces)를 .NET 애플리케이션 개발에 최적화시킬 수 있는 환경 설정을 하는 방법에 대한 것입니다. 대략 1시간 정도의 분량으로 구성되어 있으며, 기초적인 부분만을 다루고 있습니다.
+
+* 이 세션에서 다루는 것: [GitHub Codespaces](https://github.com/features/codespaces) 인스턴스 생성 및 삭제, DevContainer 환경 설정, 기본 ASP.NET Web API 앱 만들기, 기본 Blazor WebAssembly 앱 만들기
+* 이 세션에서 다루지 않는 것: [dotfiles](https://docs.github.com/en/codespaces/customizing-your-codespace/personalizing-github-codespaces-for-your-account)를 활용한 개인화
+
+
 ## 사전 준비물 ##
 
 * [GitHub 무료 계정](https://github.com/signup)

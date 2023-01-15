@@ -37,10 +37,6 @@
    printenv
    ```
 
-6. 코드스페이스 인스턴스를 삭제합니다.
-
-   ![코드스페이스 인스턴스 삭제](./images/lab1-03.png)
-
 
 ## Lab 2. DevContainer 설정 ##
 
@@ -228,33 +224,47 @@ FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}
    }
    ```
 
-8. 위와 같이 정의한 후 `F1` 키룰 눌러 `Codespaces: Rebuild Container` 항목을 선택해 변경사항을 적용한 후 다시 DevContainer를 빌드합니다. 이후 아래 명령어를 통해 제대로 각종 도구가 제대로 설치가 되었는지 확인합니다.
+8. 위와 같이 정의한 후 아래 명령어를 이용해 변경사항을 커밋하고 푸시합니다.
 
-```bash
-# OS 정보
-cat /etc/os-release
+   ```bash
+   git add .
+   git commit -m "Add devcontainer settings"
+   git push origin
+   ```
 
-# .NET SDK 설치 여부
-dotnet --list-sdks
+9. `F1` 키룰 눌러 `Codespaces: Full Rebuild Container` 항목을 선택해 변경사항을 적용한 후 다시 DevContainer를 빌드합니다. 이후 아래 명령어를 통해 제대로 각종 도구가 제대로 설치가 되었는지 확인합니다.
 
-# 파워셸 설치 여부
-pwsh --version
+   ```bash
+   # OS 정보
+   cat /etc/os-release
 
-# nvm 설치 여부
-nvm --version
+   # .NET SDK 설치 여부
+   dotnet --list-sdks
 
-# node 설치 여부
-node --version
+   # 파워셸 설치 여부
+   pwsh --version
 
-# Azure CLI 설치 여부
-az --version
+   # nvm 설치 여부
+   nvm --version
 
-# GitHub CLI 설치 여부
-gh --version
+   # node 설치 여부
+   node --version
 
-# oh-my-zsh 설치 여부
-omz version
-```
+   # Azure CLI 설치 여부
+   az --version
+
+   # GitHub CLI 설치 여부
+   gh --version
+
+   # zsh 설치 여부
+   zsh --version
+
+   # oh-my-zsh 설치 여부
+   omz version
+
+   # 기타 환경 변수 확인
+   printenv
+   ```
 
 
 ### 셸 스크립트 (선택) ###
@@ -271,7 +281,7 @@ omz version
    }
    ```
 
-2. `post-create.sh` 파일을 만들고 아래 명령어를 추가합니다.
+2. `.devcontainer` 디렉토리 아래에 `post-create.sh` 파일을 만들고 아래 명령어를 추가합니다.
 
    ```bash
    # Azure Functions Core Tools
@@ -287,45 +297,65 @@ omz version
    curl -fsSL https://aka.ms/install-azd.sh | bash
    ```
 
-3. `F1` 키를 눌러 `Codespaces: Rebuild Container` 명령을 실행시킵니다. 이후 아래 명령어를 통해 제대로 각종 도구가 제대로 설치가 되었는지 확인합니다.
+3. 아래 명령어를 통해 방금 생성한 `post-create.sh` 파일을 실행 가능하도록 권한을 설정합니다.
 
-```bash
-# OS 정보
-cat /etc/os-release
+   ```bash
+   chmod +x .devcontainer/post-create.sh
+   ```
 
-# .NET SDK 설치 여부
-dotnet --list-sdks
+4. 아래 명령어를 통해 변경사항을 저장하고 리포지토리에 반영합니다.
 
-# 파워셸 설치 여부
-pwsh --version
+   ```bash
+   git add .
+   git commit -m "Update devcontainer settings"
+   git push origin
+   ```
 
-# nvm 설치 여부
-nvm --version
+5. `F1` 키를 눌러 `Codespaces: Full Rebuild Container` 명령을 실행시킵니다. 이후 아래 명령어를 통해 제대로 각종 도구가 제대로 설치가 되었는지 확인합니다.
 
-# node 설치 여부
-node --version
+   ```bash
+   # OS 정보
+   cat /etc/os-release
 
-# Azure CLI 설치 여부
-az --version
+   # .NET SDK 설치 여부
+   dotnet --list-sdks
 
-# Azure Bicep CLI 설치 여부
-az bicep version
+   # 파워셸 설치 여부
+   pwsh --version
 
-# Azure Functions Core Tools 설치 여부
-func --version
+   # nvm 설치 여부
+   nvm --version
 
-# Azure Static Web App CLI 설치 여부
-swa --version
+   # node 설치 여부
+   node --version
 
-# Azure Dev CLI 설치 여부
-azd --version
+   # Azure CLI 설치 여부
+   az --version
 
-# GitHub CLI 설치 여부
-gh --version
+   # Azure Bicep CLI 설치 여부
+   az bicep version
 
-# oh-my-zsh 설치 여부
-omz version
-```
+   # Azure Functions Core Tools 설치 여부
+   func --version
+
+   # Azure Static Web App CLI 설치 여부
+   swa --version
+
+   # Azure Dev CLI 설치 여부
+   azd version
+
+   # GitHub CLI 설치 여부
+   gh --version
+
+   # zsh 설치 여부
+   zsh --version
+
+   # oh-my-zsh 설치 여부
+   omz version
+
+   # 기타 환경 변수 확인
+   printenv
+   ```
 
 
 ## Lab 3. ASP.NET Web API 앱 개발 및 배포하기 ##
@@ -516,31 +546,31 @@ omz version
 
 10. 아래 명령어를 통해 Azure Static Web App 인스턴스를 생성합니다.
 
-   ```bash
-   location=eastasia
-   name=dotnetconfkr
-   rg=rg-$name
-   sttapp=sttapp-$name-$RANDOM
+    ```bash
+    location=eastasia
+    name=dotnetconfkr
+    rg=rg-$name
+    sttapp=sttapp-$name-$RANDOM
 
-   az group create -n $rg -l $location
-   az staticwebapp create -n $sttapp -g $rg -l $location
-   ```
+    az group create -n $rg -l $location
+    az staticwebapp create -n $sttapp -g $rg -l $location
+    ```
 
 11. 아래 명령어를 통해 Azure Static Web App 인스턴스의 배포 키를 받아옵니다.
 
-   ```bash
-   token=$(az staticwebapp secrets list -g $rg -n $sttapp --query "properties.apiKey" -o tsv)
-   ```
+    ```bash
+    token=$(az staticwebapp secrets list -g $rg -n $sttapp --query "properties.apiKey" -o tsv)
+    ```
 
 12. 아래 명령어를 통해 Blazor 앱을 Azure Static Web App 인스턴스로 배포합니다.
 
-   ```bash
-   swa deploy -d $token
-   ```
+    ```bash
+    swa deploy -d $token --env default
+    ```
 
 13. 배포된 앱을 확인합니다.
 14. 배포된 앱을 아래 명령어를 이용해 삭제합니다.
 
-```bash
-az group delete -n $rg
-```
+    ```bash
+    az group delete -n $rg
+    ```

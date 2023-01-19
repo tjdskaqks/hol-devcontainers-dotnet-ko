@@ -1,0 +1,89 @@
+{
+    "name": "DevContainer for .NET",
+    
+    "build": {
+        // 컨테이너 기본 이미지 설정
+        "dockerfile": "./Dockerfile",
+        "context": ".",
+        "args": {
+          "VARIANT": "7.0"
+        }
+      },
+    
+    "forwardPorts": [
+      // 포트 포워딩
+      // Azure Function apps
+      7071,
+      // ASP.NET Core Web/API apps
+      5000, 5001,
+      // Azure Static Web App CLI
+      4280
+    ],
+    
+    "features": {
+      // 추가 기능
+      // Azure CLI
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+        "version": "latest",
+        "extensions": "account,alias,deploy-to-azure,functionapp,subscription,webapp"
+      },
+  
+      // GitHub CLI
+      "ghcr.io/devcontainers/features/github-cli:1": {
+        "version": "latest"
+      },
+  
+      // node.js
+      "ghcr.io/devcontainers/features/node:1": {
+        "version": "lts",
+        "nodeGypDependencies": true,
+        "nvmInstallPath": "/usr/local/share/nvm"
+      },
+  
+      // common utilities
+      "ghcr.io/devcontainers/features/common-utils:1": {
+        "installZsh": true,
+        "installOhMyZsh": true,
+        "upgradePackages": true,
+        "username": "vscode",
+        "uid": "1000",
+        "gid": "1000"
+      }
+    },
+    
+    "overrideFeatureInstallOrder": [
+      // 추가 기능 설치 순서
+      "ghcr.io/devcontainers/features/common-utils"
+    ],
+    
+    "customizations": {
+      "vscode": {
+        // 코드스페이스 커스터마이징
+        "extensions": [
+          // VS Code 익스텐션
+          "ms-dotnettools.csharp",
+          "kreativ-software.csharpextensions",
+          "ms-vscode.PowerShell",
+          "ms-vscode.vscode-node-azure-pack",
+          "ms-azuretools.vscode-bicep",
+          "VisualStudioExptTeam.vscodeintellicode"
+        ],
+    
+        "settings": {
+            // VS Code 환경 설정
+            "editor.minimap.enabled": true,
+            "explorer.sortOrder": "type",
+            "explorer.fileNesting.enabled": true,
+            "explorer.fileNesting.patterns": {
+                "*.bicep": "${capture}.json",
+                "*.razor": "${capture}.razor.cs,${capture}.razor.css",
+                "*.js": "${capture}.js.map"
+        }
+      }
+    },
+
+    // DevContainer 사용자 계정
+    "remoteUser": "vscode"
+  }
+}
+}

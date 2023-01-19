@@ -83,6 +83,8 @@
     },
 
     // DevContainer 사용자 계정
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+
+    "postCreateCommand": "/bin/bash ./.devcontainer/post-create.sh > ~/post-create.log"
   }
 }
